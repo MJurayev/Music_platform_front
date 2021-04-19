@@ -1,5 +1,3 @@
-
-import 'antd/dist/antd.css';
 import { BrowserRouter as Router, Route  ,Redirect} from "react-router-dom";
 import Home from './pages/Home/Home';
 import AudioPl from './components/AudioPlayer/AudioPlayer';
