@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import MusicsProvider from './store/providers/musics';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MusicsProvider>
+      <App />
+    </MusicsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
