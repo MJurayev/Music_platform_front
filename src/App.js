@@ -5,8 +5,10 @@ import AudioPl from './components/AudioPlayer/AudioPlayer';
 import st from  './App.module.css';
 import { useMusics } from './store/providers/musics';
 import { useEffect,useState } from 'react';
+import HomeLayout from "./Layouts/HomeLayout";
+import AddMusic from "./pages/AddMusic/AddMusic";
 function App() {
-  const [state] = useMusics()
+  const {state} = useMusics()
   const [currentMusic, SetCurrentMusic] = useState()
 
   useEffect(()=>{
@@ -20,7 +22,8 @@ function App() {
           <div className={st.container}>
             <div className={st.topContent}>
               <Route exact path="/"><Redirect to='/home' /></Route>
-              <Route path="/home" ><Home /></Route>
+              <Route path="/home" ><HomeLayout><Home /></HomeLayout></Route>
+              <Route path="/add-music" ><HomeLayout><AddMusic /></HomeLayout></Route>
             </div>
             <div className={st.audioContainer}>
               <AudioPl current={currentMusic || ''}/>

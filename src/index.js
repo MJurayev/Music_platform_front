@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import MusicsProvider from './store/providers/musics';
+import ServerProvider from './store/providers/ServerProvider';
 
 ReactDOM.render(
   <React.StrictMode>
+    <ServerProvider>
     <MusicsProvider>
       <App />
     </MusicsProvider>
+    </ServerProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

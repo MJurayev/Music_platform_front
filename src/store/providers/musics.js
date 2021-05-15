@@ -2,6 +2,7 @@ import * as musics from '../actions/musics'
 // src/count-context.js
 import{createContext, useContext, useEffect, useReducer} from 'react'
 import { updateObject } from '../utils';
+import axios from 'axios';
   
   const initialState = {
     musics:[],
@@ -10,22 +11,23 @@ import { updateObject } from '../utils';
     current:1
   }
   
-  function startMusicListStart(state){
+  function startMusicListStart(state, payload){
     const newState ={
-      musics:[
-        {id:1, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:2, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-        {id:3, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:4, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-        {id:5, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:6, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-        {id:7, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:8, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-        {id:9, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:10, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-        {id:11, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-        {id:12, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"}
-      ],
+      musics:payload ? payload : [],
+      // musics:[
+      //   {id:1, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:2, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
+      //   {id:3, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:4, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
+      //   {id:5, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:6, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
+      //   {id:7, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:8, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
+      //   {id:9, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:10, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
+      //   {id:11, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+      //   {id:12, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"}
+      // ],
       isLoading:false
     }
     const result = updateObject(state, newState)
@@ -66,7 +68,7 @@ import { updateObject } from '../utils';
   function reducerMusics(state, action) {
     switch (action.type) {
       case musics.MUSICS_LIST_START_LOADING:
-        return startMusicListStart(state);
+        return startMusicListStart(state ,action.payload);
       case musics.MUSICS_DELETE:
         return deleteMusic(state, action.payload);
       case musics.MUSICS_ADD:
@@ -84,11 +86,17 @@ import { updateObject } from '../utils';
   
   export default function MusicsProvider({children}){
     const [state, dispatch] = useReducer(reducerMusics, initialState)
-    useEffect(()=>{
-      setTimeout(()=>{
-        dispatch({type:musics.MUSICS_LIST_START_LOADING})
-      }, 1000)
-    }, [])
+    const fetchData=async()=>{
+
+      await axios.get('https://muzikpage.000webhostapp.com/api/muzik').then(res=>{
+        dispatch({type:musics.MUSICS_LIST_START_LOADING, payload:res.data})
+      })
+      .catch(err =>console.log(err))
+    }
+    useEffect(
+        ()=>{
+          fetchData()
+        }, [])
     return (
       <Context.Provider value={{state, dispatch}}>
         <Context.Consumer>
@@ -100,5 +108,5 @@ import { updateObject } from '../utils';
 
  export const useMusics=()=>{
     const {state, dispatch}= useContext(Context)
-    return [state, dispatch]
+    return {state, dispatch}
   }
