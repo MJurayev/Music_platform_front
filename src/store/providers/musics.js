@@ -1,6 +1,6 @@
 import * as musics from '../actions/musics'
 // src/count-context.js
-import{createContext, useContext, useEffect, useReducer} from 'react'
+import{createContext, useContext, useReducer} from 'react'
 import { updateObject } from '../utils';
 import axios from 'axios';
 import { useServer } from './ServerProvider';
@@ -88,17 +88,15 @@ import { useServer } from './ServerProvider';
   export default function MusicsProvider({children}){
     const {server } = useServer()
     const [state, dispatch] = useReducer(reducerMusics, initialState)
-    const fetchData=async()=>{
+    async function  fetchData(){
 
       await axios.get(`${server}/api/muzik`).then(res=>{
         dispatch({type:musics.MUSICS_LIST_START_LOADING, payload:res.data})
       })
       .catch(err =>console.log(err))
     }
-    useEffect(
-        ()=>{
-          fetchData()
-        }, [])
+          fetchData() 
+
     return (
       <Context.Provider value={{state, dispatch}}>
         <Context.Consumer>
