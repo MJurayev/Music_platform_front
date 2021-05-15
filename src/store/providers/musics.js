@@ -88,7 +88,7 @@ import axios from 'axios';
     const [state, dispatch] = useReducer(reducerMusics, initialState)
     const fetchData=async()=>{
 
-      await axios.get('https://muzikpage.000webhostapp.com/api/muzik').then(res=>{
+      await axios.get('https://muzikapage.000webhostapp.com/api/muzik').then(res=>{
         dispatch({type:musics.MUSICS_LIST_START_LOADING, payload:res.data})
       })
       .catch(err =>console.log(err))
