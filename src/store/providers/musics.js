@@ -3,6 +3,7 @@ import * as musics from '../actions/musics'
 import{createContext, useContext, useEffect, useReducer} from 'react'
 import { updateObject } from '../utils';
 import axios from 'axios';
+import { useServer } from './ServerProvider';
   
   const initialState = {
     musics:[],
@@ -85,10 +86,11 @@ import axios from 'axios';
   const Context = createContext();
   
   export default function MusicsProvider({children}){
+    const {server } = useServer()
     const [state, dispatch] = useReducer(reducerMusics, initialState)
     const fetchData=async()=>{
 
-      await axios.get('https://muzikpage.000webhostapp.com/api/muzik').then(res=>{
+      await axios.get(`${server}/api/muzik`).then(res=>{
         dispatch({type:musics.MUSICS_LIST_START_LOADING, payload:res.data})
       })
       .catch(err =>console.log(err))
