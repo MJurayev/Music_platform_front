@@ -1,11 +1,13 @@
 import axios from 'axios'
-import React, { useRef, useState } from 'react'
+import  { useRef, useState } from 'react'
+import { useServer } from '../../store/providers/ServerProvider'
 import st from './AddMusic.module.css'
 export default function AddMusic() {
     
     const nameRef = useRef()
     const artistRef = useRef()
     const fileRef = useRef()
+    const {server} = useServer()
     const [isError, setIsError] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
     const handleSubmit= async ()=>{
@@ -16,7 +18,7 @@ export default function AddMusic() {
         formInfo.append('url', "asdasd")
         formInfo.append('file1', fileRef.current.files[0])
 
-        await axios.post('https://muzikpage.000webhostapp.com/api/muzik/add-muzik', formInfo, {
+        await axios.post(`${server}/api/muzik/add-muzik`, formInfo, {
             
         }).then(()=>{
             clearForm()
