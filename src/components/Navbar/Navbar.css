@@ -1,7 +1,7 @@
 /*Desktop View*/
 .header {
     display: flex;
-    background: linear-gradient(#6616fc, #f394d3);
+    background:rgb(197, 197, 197);
     justify-content: space-between;
     align-items: center;
     padding: 0px 40px;
@@ -56,6 +56,17 @@
     cursor: pointer;
     align-items: center;
   }
+  
+  .option a{
+    font-size: 19px;
+    font-weight: 500;
+    transition: color .5s ease-in-out;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  .option a:hover{
+    color: blue;
+  }
   .mobile-menu {
     display: none;
   }
@@ -102,6 +113,7 @@
       height: 10vw;
       padding: 30px 0px;
     }
+    
     .sign-up {
       background: rgb(222, 9, 241);
       border-radius: 3px;

@@ -3,9 +3,8 @@ import { useMusics } from '../../store/providers/musics'
 import PlayPauseIcon from '../icons/PlayPauseIcon'
 import st from './SingleMusicItem.module.css'
 export default function SingleMusicItem({info, onSelect}) {
-    const [state] = useMusics()
+    const {state} = useMusics()
     const [isPlaying, setIsPlaying] = useState(false)
-    const [isLoaded, SetIsLoaded] = useState(false)
     const onPlay=(id)=>{
         onSelect(id)
     }
@@ -16,9 +15,7 @@ export default function SingleMusicItem({info, onSelect}) {
             setIsPlaying(true)
         }
     }, [state, info])
-    useEffect(()=>{
-        SetIsLoaded(true)
-    }, [])
+   
 
     const ItemStyle = {
         transition:'transform 1s ease'
