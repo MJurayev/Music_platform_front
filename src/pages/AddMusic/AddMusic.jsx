@@ -16,7 +16,7 @@ export default function AddMusic() {
         formInfo.append('url', "asdasd")
         formInfo.append('file1', fileRef.current.files[0])
 
-        await axios.post('https://muzikpage.000webhostapp.com/api/muzik/add-muzik', formInfo, {
+        await axios.post('https://muzikapage.000webhostapp.com/api/muzik/add-muzik', formInfo, {
             
         }).then(()=>{
             clearForm()
