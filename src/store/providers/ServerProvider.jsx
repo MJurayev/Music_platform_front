@@ -1,7 +1,7 @@
 import React, {  createContext, useContext, useState } from 'react'
 const Context = createContext()
 export default function ServerProvider({children}) {
-    const [server, setServer] = useState('https://muzikapage.000webhostapp.com')
+    const [server, setServer] = useState('http://musicapage.000webhostapp.com')
     return (
         <Context.Provider value={{server, setServer}}>
             <Context.Consumer>
