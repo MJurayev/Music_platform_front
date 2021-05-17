@@ -15,20 +15,6 @@ import { useServer } from './ServerProvider';
   function startMusicListStart(state, payload){
     const newState ={
       musics:payload ? payload : [],
-      // musics:[
-      //   {id:1, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:2, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-      //   {id:3, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:4, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-      //   {id:5, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:6, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-      //   {id:7, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:8, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-      //   {id:9, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:10, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"},
-      //   {id:11, name:'Music', artist:"Mansur", url:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
-      //   {id:12, name:'Music2', artist:"Mansur", url:"mp3/2.mp3"}
-      // ],
       isLoading:false
     }
     const result = updateObject(state, newState)
@@ -88,10 +74,10 @@ import { useServer } from './ServerProvider';
   export default function MusicsProvider({children}){
     const {server } = useServer()
     const [state, dispatch] = useReducer(reducerMusics, initialState)
-    async function  fetchData(){
-
+    const  fetchData=async()=>{
       await axios.get(`${server}/api/muzik`).then(res=>{
         dispatch({type:musics.MUSICS_LIST_START_LOADING, payload:res.data})
+        console.log(res.data)
       })
       .catch(err =>console.log(err))
     }
